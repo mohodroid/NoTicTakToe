@@ -1,24 +1,30 @@
+import algorithm.NoTicTakToe;
+import dto.PlayerActResult;
+import enums.BoardNutValue;
+import enums.Player;
+import algorithm.*;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class NoTakToeGame {
     String[] players;
-    NoTicTakToe noTicTakToe;
+    SequentialGame noTicTakToe;
     int row, col;
-    ActPlay actPlay;
+    PlayerActResult playerActResult;
 
 
-    private ActPlay computerPlay() {
+    private PlayerActResult computerPlay() {
         Random random = new Random();
-        ActPlay computer;
-        int randomX = random.nextInt(noTicTakToe.getRow());
+        PlayerActResult computer = null;
+        int randomX = random.nextInt(noTicTakToe.getRaw());
         int randomY = random.nextInt(noTicTakToe.getCol());
-        computer = noTicTakToe.play(randomX, randomY);
+        computer = noTicTakToe.play(randomX, randomY, Player.PLAYER_TWO);
         return computer;
     }
 
-    public NoTakToeGame(String[] players, NoTicTakToe noTicTakToe) {
+    public NoTakToeGame(String[] players, SequentialGame noTicTakToe) {
         this.players = players;
         this.noTicTakToe = noTicTakToe;
     }
@@ -31,10 +37,12 @@ public class NoTakToeGame {
                 return;
             }
             System.out.println("_____" + "player1 " + "turn" + "______");
-            actPlay = play();
-//            mohsen += play;
-//            System.out.print(play);
-            System.out.println(Arrays.toString(actPlay.getPlayerStates()));
+            try {
+                playerActResult = play();
+            }catch (Exception e) {
+                playerActResult = play();
+            }
+            System.out.println(Arrays.toString(playerActResult.getPlayerStatuses()));
             System.out.println(noTicTakToe);
 
             if (noTicTakToe.isFinished()) {
@@ -42,14 +50,18 @@ public class NoTakToeGame {
                 return;
             }
             System.out.println("_____" + "player2 " + "turn" + "______");
-            actPlay = computerPlay();
-            System.out.println(Arrays.toString(actPlay.getPlayerStates()));
+            try {
+                playerActResult = computerPlay();
+            } catch (Exception e) {
+                playerActResult = computerPlay();
+            }
+            System.out.println(Arrays.toString(playerActResult.getPlayerStatuses()));
             System.out.println(noTicTakToe);
         }
     }
 
 
-    ActPlay play() {
+    PlayerActResult play() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             do {
@@ -62,14 +74,14 @@ public class NoTakToeGame {
                 col = scanner.nextInt();
                 System.out.println();
             } while (col <= 0);
-            if (noTicTakToe.valueOf(row - 1, col - 1) == BoardStates.EMPTY.getValue()) {
-                return noTicTakToe.play(row - 1, col - 1);
+            if (noTicTakToe.valueOf(row - 1, col - 1) == BoardNutValue.EMPTY.getValue()) {
+                return noTicTakToe.play(row - 1, col - 1, Player.PLAYER_ONE);
             }
         }
     }
 
     public static void main(String[] args) {
-        NoTicTakToe noTicTakToe = new NoTicTakToe(5, 7);
+        SequentialGame noTicTakToe = new NoTicTakToe(4, 4);
         String[] players = new String[2];
         players[0] = "mohsen";
         players[1] = "mehdi";

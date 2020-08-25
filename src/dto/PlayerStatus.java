@@ -1,12 +1,16 @@
+package dto;
+
+import enums.Player;
+
 import java.util.Objects;
 
-public class PlayerState {
-    private final int userId;
+public class PlayerStatus {
+    private final Player player;
     private final int lines;
     private final boolean isTurn;
 
-    public PlayerState(int userId, int lines, boolean isTurn) {
-        this.userId = userId;
+    public PlayerStatus(Player player, int lines, boolean isTurn) {
+        this.player = player;
         this.lines = lines;
         this.isTurn = isTurn;
     }
@@ -15,8 +19,8 @@ public class PlayerState {
         return lines;
     }
 
-    public int getUserId() {
-        return userId;
+    public Player getPlayer() {
+        return player;
     }
 
     public boolean isTurn() {
@@ -27,21 +31,21 @@ public class PlayerState {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PlayerState that = (PlayerState) o;
-        return userId == that.userId &&
+        PlayerStatus that = (PlayerStatus) o;
+        return player == that.player &&
                 lines == that.lines &&
                 isTurn == that.isTurn;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, lines, isTurn);
+        return Objects.hash(player, lines, isTurn);
     }
 
     @Override
     public String toString() {
-        return "PlayerState{" +
-                "userId=" + userId +
+        return "dto.PlayerState{" +
+                "player=" + player +
                 ", lines=" + lines +
                 ", isTurn=" + isTurn +
                 '}';
