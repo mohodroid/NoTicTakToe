@@ -11,8 +11,7 @@ public enum BoardNutValue {
     /**
      * Line values
      */
-    LINE_PLAYER_ONE(4),
-    LINE_PLAYER_TWO(5);
+    LINE(2);
 
 
     private final int value;

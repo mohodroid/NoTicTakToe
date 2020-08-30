@@ -39,7 +39,9 @@ public final class NoTicTakToe implements SequentialGame {
     }
 
     @Override
-    public int getCol() {return col;}
+    public int getCol() {
+        return col;
+    }
 
     @Override
     public int getRaw() {
@@ -54,7 +56,7 @@ public final class NoTicTakToe implements SequentialGame {
     @Override
     public PlayerActResult play(int x, int y, Player player) {
         //validation
-        validation(x, y, player);
+//        validation(x, y, player);
         //fill board with player one nut or player two nut
         gameBoard[x][y] = BoardNutValue.FILL.getValue();
         //update player states and board
@@ -82,12 +84,12 @@ public final class NoTicTakToe implements SequentialGame {
     private void updatePlayersStatus(int numberOfLines) {
         if (playersStatus[0].isTurn()) {
             int totalLine = playersStatus[0].getLines() + numberOfLines;
-            playersStatus[0] = new PlayerStatus(playersStatus[0].getPlayer(), playersStatus[0].getLines(), false);
-            playersStatus[1] = new PlayerStatus(playersStatus[1].getPlayer(), totalLine, true);
+            playersStatus[0] = new PlayerStatus(playersStatus[0].getPlayer(), totalLine, false);
+            playersStatus[1] = new PlayerStatus(playersStatus[1].getPlayer(), playersStatus[1].getLines(), true);
         } else if (playersStatus[1].isTurn()) {
             int totalLine = playersStatus[1].getLines() + numberOfLines;
-            playersStatus[0] = new PlayerStatus(playersStatus[0].getPlayer(), totalLine, true);
-            playersStatus[1] = new PlayerStatus(playersStatus[1].getPlayer(), playersStatus[1].getLines(), false);
+            playersStatus[0] = new PlayerStatus(playersStatus[0].getPlayer(), playersStatus[0].getLines(), true);
+            playersStatus[1] = new PlayerStatus(playersStatus[1].getPlayer(), totalLine, false);
         }
     }
 
@@ -165,18 +167,14 @@ public final class NoTicTakToe implements SequentialGame {
         //check for creating line up to btm
         if (up + btm + 1 >= 3) {
             for (int i = x - up; i <= x + btm; i++) {
-                if (player == Player.PLAYER_ONE)
-                    gameBoard[i][y] = BoardNutValue.LINE_PLAYER_ONE.getValue();
-                else gameBoard[i][y] = BoardNutValue.LINE_PLAYER_TWO.getValue();
+                gameBoard[i][y] = BoardNutValue.LINE.getValue();
             }
             numberOfLine++;
         }
         //check for creating line left to right
         if (right + left + 1 >= 3) {
             for (int i = y - left; i <= y + right; i++) {
-                if (player == Player.PLAYER_ONE)
-                    gameBoard[x][i] = BoardNutValue.LINE_PLAYER_ONE.getValue();
-                else gameBoard[x][i] = BoardNutValue.LINE_PLAYER_TWO.getValue();
+                gameBoard[x][i] = BoardNutValue.LINE.getValue();
             }
             numberOfLine++;
         }
@@ -184,10 +182,7 @@ public final class NoTicTakToe implements SequentialGame {
         if (up_right + btm_left + 1 >= 3) {
             int count = 0;
             for (int i = y - btm_left; i <= y + up_right; i++) {
-                if (player == Player.PLAYER_ONE)
-                    gameBoard[x + btm_left - count][i] = BoardNutValue.LINE_PLAYER_ONE.getValue();
-                else
-                    gameBoard[x + btm_left - count][i] = BoardNutValue.LINE_PLAYER_TWO.getValue();
+                gameBoard[x + btm_left - count][i] = BoardNutValue.LINE.getValue();
                 count++;
             }
             numberOfLine++;
@@ -196,10 +191,7 @@ public final class NoTicTakToe implements SequentialGame {
         if (up_left + btm_right + 1 >= 3) {
             int count = 0;
             for (int i = x - up_left; i <= x + btm_right; i++) {
-                if (player == Player.PLAYER_ONE)
-                    gameBoard[i][y - up_left + count] = BoardNutValue.LINE_PLAYER_ONE.getValue();
-                else
-                    gameBoard[i][y - up_left + count] = BoardNutValue.LINE_PLAYER_TWO.getValue();
+                gameBoard[i][y - up_left + count] = BoardNutValue.LINE.getValue();
                 count++;
             }
             numberOfLine++;
